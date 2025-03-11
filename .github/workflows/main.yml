@@ -1,0 +1,27 @@
+name: API Testing Pipeline  # Workflow name
+
+on:
+  workflow_dispatch:  # Allows manual triggering from GitHub Actions UI
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Newman (Postman CLI)
+        run: npm install -g newman
+
+      - name: Run API Tests with Environment and Data File
+        run: |
+          newman run postman-tests/api-tests.postman_collection.json \
+          -e postman-tests/test-env.postman_environment.json \
+          -d postman-tests/test-data.json \
+          -r cli,json --reporter-json-export=newman-results.json
