@@ -1,4 +1,4 @@
-name: API Testing Pipeline  # Workflow name
+name: API Pipeline on Testing Env  # Workflow name
 
 on:
   workflow_dispatch:  # Allows manual triggering from GitHub Actions UI
@@ -19,9 +19,50 @@ jobs:
       - name: Install Newman (Postman CLI)
         run: npm install -g newman
 
-      - name: Run API Tests with Environment and Data File
+      # Run Collection 1
+      - name: Run Testing intervals singleShift summary report
         run: |
-          newman run postman-tests/api-tests.postman_collection.json \
-          -e postman-tests/test-env.postman_environment.json \
-          -d postman-tests/test-data.json \
-          -r cli,json --reporter-json-export=newman-results.json
+          newman run Collections/Testing-intervals-singleShift-summaryReport.postman_collection.json \
+          -e Environments/testing.postman_environment.json \
+          -d TestingDataFiles/intervalSingleShiftSummaryReport.json \
+          -r cli,json
+
+      # Run Collection 2
+      - name: Run Testing intervals multiShift detailed report
+        run: |
+          newman run Collections/Testing-intervals-multiShift-detailedReport.postman_collection.json \
+          -e Environments/testing.postman_environment.json \
+          -d TestingDataFiles/intervalMultiShiftDetailedReport.json \
+          -r cli,json
+
+      # Run Collection 3
+      - name: Run Leaves
+        run: |
+          newman run Collections/Leaves.postman_collection.json \
+          -e Environments/testing.postman_environment.json \
+          -d TestingDataFiles/Leaves.json \
+          -r cli,json
+
+      # Run Collection 4
+      - name: Run Leaves with allowed balance
+        run: |
+          newman run Collections/Leaves with allowed balance.postman_collection.json \
+          -e Environments/testing.postman_environment.json \
+          -d TestingDataFiles/LeavesWithBalance.json \
+          -r cli,json
+
+      # Run Collection 5
+      - name: Run Testing detailed report all employees
+        run: |
+          newman run Collections/Testing-detailedReport-All-Employees.postman_collection.json \
+          -e Environments/testing.postman_environment.json \
+          -d TestingDataFiles/workDetailedReportAllEmployees.json \
+          -r cli,json
+
+       # Run Collection 6
+      - name: Run Testing summary report all employees
+        run: |
+          newman run Collections/Testing-summaryReport-All-Employees.postman_collection.json \
+          -e Environments/testing.postman_environment.json \
+          -d TestingDataFiles/workSummaryReportAllEmployees.json \
+          -r cli,json
