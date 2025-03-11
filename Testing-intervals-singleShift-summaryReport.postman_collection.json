@@ -1,0 +1,671 @@
+{
+	"info": {
+		"_postman_id": "2c66bfc3-4a49-4305-924f-9c001d065392",
+		"name": "Testing-intervals-singleShift-summaryReport",
+		"description": "## Documentation for used collection and data file\n\n# Collection\n\nThis collection is for single-shift test cases which are included in this [<b>sheet</b>](https://docs.google.com/spreadsheets/d/1IEwWfIIY2fx70rCU50k8Vftt5AlELAm2q2rf7WqQe8c/edit?gid=1203718845#gid=1203718845) and they are:\n\n- TC-00001\n    \n- TC-00002\n    \n- TC-00005\n    \n- TC-00006\n    \n- TC-00007\n    \n- TC-00008\n    \n- TC-00009\n    \n- TC-00010\n    \n- TC-00011\n    \n- TC-00016\n    \n- TC-00017\n    \n- TC-00018\n    \n- TC-00019\n    \n- TC-00020\n    \n- TC-00021\n    \n- TC-00022\n    \n- TC-00023\n    \n- TC-00024\n    \n- TC-00025\n    \n\nColletion include the following requests:  \n<u>Login Web Account Admin &amp; Verification code</u>\n\nBoth requests are responsible for login and authenticate user\n\n<u>Edit checkIn &amp; Edit checkout</u>\n\nBoth requests are responsible for use checkin & checkout\n\n<u>Summary-Report<br></u>Responsible for generating report\n\nAnd all test-scripts are included in this request\n\n# Data file\n\n\"intervalSingleShiftSummaryReport.csv\"\n\nFile include 25 rows each row represent a test case with it's validations.\n\nFile is used to provide data to collection variables.\n\n### <u>File structure</u>\n\n| **column name** | **reflected value in data file** | **reflected value in data base** |\n| --- | --- | --- |\n| skipCheckout | Flag used to skip request in specific test cases | None |\n| TCsId | Test case number which is match the test case number in the used sheet | None |\n| userId | User that will be used when run test case | UserId |\n| SessionCheckInId | Session id generated when user create a checkin action | sessionId |\n| TransactionCheckinID | Transaction id generated when user create a checkin action | transactionId |\n| SessionCheckOutId | Session id generated when user create a checkout action | sessionId |\n| TransactionCheckOutID | Transaction id generated when user create a checkout action | transactionId |\n| CheckIn | Date and time for checkin which is provided by user | createDate |\n| CheckOut | Date and time for checkout which is provided by user | createDate |\n| ReportFrom | Start date for generated reportat | FromDate |\n| ReportTo | End date for generated reportat | ToDate |\n| SessionTotalActualHoursWork | ساعات الدوام الفعلي | SessionTotalActualHoursWork |\n| SessionTotalShortesHours | النقص في الدوام | SessionTotalShortesHours |\n| SessionTotalCheckInExtraHours | حضور مبكر | SessionTotalCheckInExtraHours |\n| SessionTotalCheckInLateHours | حضور متأخر | SessionTotalCheckInLateHours |\n| SessionTotalCheckOutLateHours | إنصراف مبكر | SessionTotalCheckOutLateHours |\n| SessionTotalOverTimeHours | العمل الإضافي | SessionTotalOverTimeHours |\n| SessionTotalLeaveHours | المغادرات | SessionTotalLeaveHours |\n| OutNextDay | Boolean flag used check if this shift extend to next day or not | OutNextDay |\n| Status | حالة التحضير | Status |\n| TypeDesc | Status description if exist (in case there is \"more\" link displayed) | TypeDesc |",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41276037"
+	},
+	"item": [
+		{
+			"name": "Login Web Account Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "requstid",
+						"value": "2:857457095729380",
+						"type": "text"
+					},
+					{
+						"key": "Servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"PageNumber\": 0,\r\n  \"PageSize\": 0,\r\n  \"Language\": 0,\r\n  \"Data\": {\r\n      \"UserName\": \"m.monged@t2.sa\",\r\n      \"Password\":\"wb\\\\42o_`M\",\r\n      \"AccountID\":\"993a9ad3-cacc-4ddc-9978-553f66570714\",\r\n      \"ReCaptchaToken\":\"\"\r\n      }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/User/Login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"User",
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verification code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"pm.environment.set(\"token\", jsonData.Data.AccessToken )"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer null"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": "1:143473796329390"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not-A.Brand\";v=\"99\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {\n    \"UserName\": \"m.monged@t2.sa\",\n    \"Password\": \"wb\\\\42o_`M\",\n    \"AccountID\": \"993a9ad3-cacc-4ddc-9978-553f66570714\",\n    \"PhoneNumber\": \"201273528426\",\n    \"VerificationCode\": \"1234\"\n  },\n  \"UserID\": \"\",\n  \"PageNumber\": 0,\n  \"PageSize\": 0,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -180\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/User/VerifyCode",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"User",
+						"VerifyCode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit checkIn",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczMTk5NjI5NywiZXhwIjoxNzMyMDAzNDk3LCJpYXQiOjE3MzE5OTYyOTd9.gRyx5L6qVuPccZch_OkPtXpJ7P13v8g-U3X__J1j3ro"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": ":71443821890729691"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "userid",
+						"value": "01c29bcb-804a-4a6c-96fb-302f915b5bbb"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {\n    \"sessionId\": {{SessionCheckinId}},\n    \"transactionId\": {{TransactionCheckInID}},\n    \"createDate\": \"{{CheckIn}}\",\n    \"reasonId\": null,\n    \"otherReasonText\": \"\"\n  },\n  \"UserID\": \"\",\n  \"PageNumber\": 0,\n  \"PageSize\": 0,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/Transaction/UpdateAuditTransaction",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"Transaction",
+						"UpdateAuditTransaction"
+					]
+				},
+				"description": "Generated from cURL: curl 'https://availo-testingapinew.t2.sa/api/Transaction/UpdateAuditTransaction' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'accept-language: en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczMTk5NjI5NywiZXhwIjoxNzMyMDAzNDk3LCJpYXQiOjE3MzE5OTYyOTd9.gRyx5L6qVuPccZch_OkPtXpJ7P13v8g-U3X__J1j3ro' \\\r\n  -H 'clientkey: Availo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'language: 0' \\\r\n  -H 'origin: https://availo-testingnewui.t2.sa' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://availo-testingnewui.t2.sa/' \\\r\n  -H 'requestversion: v 4.9.5' \\\r\n  -H 'requstid: :71443821890729691' \\\r\n  -H 'requsttoken;' \\\r\n  -H 'sec-ch-ua: \"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-site' \\\r\n  -H 'servicekey: aa55a21aae70be27b84cdef2413f519c' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36' \\\r\n  -H 'userid: 01c29bcb-804a-4a6c-96fb-302f915b5bbb' \\\r\n  --data-raw $'{\\n  \"Data\": {\\n    \"sessionId\": 257633,\\n    \"transactionId\": 257634,\\n    \"createDate\": \"2024-11-14 17:00\",\\n    \"reasonId\": null,\\n    \"otherReasonText\": \"\"\\n  },\\n  \"UserID\": \"\",\\n  \"PageNumber\": 0,\\n  \"PageSize\": 0,\\n  \"Language\": 1,\\n  \"TimeZoneOffset\": -120\\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit checkout",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"if (pm.iterationData.get('skipCheckout') === 'true') {\r",
+							"pm.setNextRequest(null);\r",
+							"    }"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczMTk5NjI5NywiZXhwIjoxNzMyMDAzNDk3LCJpYXQiOjE3MzE5OTYyOTd9.gRyx5L6qVuPccZch_OkPtXpJ7P13v8g-U3X__J1j3ro"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": ":71443821890729691"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "userid",
+						"value": "01c29bcb-804a-4a6c-96fb-302f915b5bbb"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {\n    \"sessionId\": {{SessionCheckOutId}},\n    \"transactionId\": {{TransactionCheckOutID}},\n    \"createDate\": \"{{CheckOut}}\",\n    \"reasonId\": null,\n    \"otherReasonText\": \"\"\n  },\n  \"UserID\": \"\",\n  \"PageNumber\": 0,\n  \"PageSize\": 0,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/Transaction/UpdateAuditTransaction",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"Transaction",
+						"UpdateAuditTransaction"
+					]
+				},
+				"description": "Generated from cURL: curl 'https://availo-testingapinew.t2.sa/api/Transaction/UpdateAuditTransaction' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'accept-language: en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczMTk5NjI5NywiZXhwIjoxNzMyMDAzNDk3LCJpYXQiOjE3MzE5OTYyOTd9.gRyx5L6qVuPccZch_OkPtXpJ7P13v8g-U3X__J1j3ro' \\\r\n  -H 'clientkey: Availo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'language: 0' \\\r\n  -H 'origin: https://availo-testingnewui.t2.sa' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://availo-testingnewui.t2.sa/' \\\r\n  -H 'requestversion: v 4.9.5' \\\r\n  -H 'requstid: :71443821890729691' \\\r\n  -H 'requsttoken;' \\\r\n  -H 'sec-ch-ua: \"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-site' \\\r\n  -H 'servicekey: aa55a21aae70be27b84cdef2413f519c' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36' \\\r\n  -H 'userid: 01c29bcb-804a-4a6c-96fb-302f915b5bbb' \\\r\n  --data-raw $'{\\n  \"Data\": {\\n    \"sessionId\": 257633,\\n    \"transactionId\": 257634,\\n    \"createDate\": \"2024-11-14 17:00\",\\n    \"reasonId\": null,\\n    \"otherReasonText\": \"\"\\n  },\\n  \"UserID\": \"\",\\n  \"PageNumber\": 0,\\n  \"PageSize\": 0,\\n  \"Language\": 1,\\n  \"TimeZoneOffset\": -120\\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Summary-Report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Retrieve the collection name from the collection variable\r",
+							"var collectionName = \"Testing-intervals-singleShift-summaryReport\"\r",
+							"var folderName = \"Testing intervals\"\r",
+							"var TestCaseId = pm.iterationData.get(\"TCsId\") \r",
+							"\r",
+							"\r",
+							"//ساعات الدوام الفعلي\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\":  Validate that Session Total Actual Hours Work is correct\", function () {\r",
+							"    const expectedSessionTotalActualHoursWork = pm.iterationData.get(\"SessionTotalActualHoursWork\");\r",
+							"    const actualSessionTotalActualHoursWork = jsonData.Data.WorkReportTransactions.List[0].SessionTotalActualHoursWork\r",
+							"    pm.expect(actualSessionTotalActualHoursWork,`Expected session total actual hours work to be ${expectedSessionTotalActualHoursWork}, but got ${actualSessionTotalActualHoursWork}`).to.equal(expectedSessionTotalActualHoursWork);\r",
+							"});\r",
+							"\r",
+							"//النقص في الدوام\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\":  Validate that Session Total Shortes Hours is correct\", function () {\r",
+							"    const expectedSessionTotalShortesHours = pm.iterationData.get(\"SessionTotalShortesHours\");\r",
+							"    const actualSessionTotalShortesHours = jsonData.Data.WorkReportTransactions.List[0].SessionTotalShortesHours\r",
+							"    pm.expect(actualSessionTotalShortesHours,`Expected session total shortes hours to be ${expectedSessionTotalShortesHours}, but got ${actualSessionTotalShortesHours}`).to.equal(expectedSessionTotalShortesHours);\r",
+							"});\r",
+							"\r",
+							"//حضور مبكر\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\":  Validate that Session Total CheckIn Extra Hours is correct\", function () {\r",
+							"    const expectedSessionTotalCheckInExtraHours = pm.iterationData.get(\"SessionTotalCheckInExtraHours\");\r",
+							"    const actualSessionTotalCheckInExtraHours = jsonData.Data.WorkReportTransactions.List[0].SessionTotalCheckInExtraHours\r",
+							"    pm.expect(actualSessionTotalCheckInExtraHours,`Expected session total checkIn extra hours to be ${expectedSessionTotalCheckInExtraHours}, but got ${actualSessionTotalCheckInExtraHours}`).to.equal(expectedSessionTotalCheckInExtraHours);\r",
+							"});\r",
+							"\r",
+							"//حضور متأخر\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\":  Validate that Session Total CheckIn Late Hours is correct\", function () {\r",
+							"    const expectedSessionTotalCheckInLateHours = pm.iterationData.get(\"SessionTotalCheckInLateHours\");\r",
+							"    const actualSessionTotalCheckInLateHours = jsonData.Data.WorkReportTransactions.List[0].SessionTotalCheckInLateHours\r",
+							"    pm.expect(actualSessionTotalCheckInLateHours,`Expected session total checkIn late hours to be ${expectedSessionTotalCheckInLateHours}, but got ${actualSessionTotalCheckInLateHours}`).to.equal(expectedSessionTotalCheckInLateHours);\r",
+							"});\r",
+							"\r",
+							"//إنصراف مبكر\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\":  Validate that Session Total CheckOut Late Hours is correct\", function () {\r",
+							"    const expectedSessionTotalCheckOutLateHours = pm.iterationData.get(\"SessionTotalCheckOutLateHours\");\r",
+							"    const actualSessionTotalCheckOutLateHours = jsonData.Data.WorkReportTransactions.List[0].SessionTotalCheckOutLateHours\r",
+							"    pm.expect(actualSessionTotalCheckOutLateHours,`Expected session total checkOut late hours to be ${expectedSessionTotalCheckOutLateHours}, but got ${actualSessionTotalCheckOutLateHours}`).to.equal(expectedSessionTotalCheckOutLateHours);\r",
+							"});\r",
+							"\r",
+							"//العمل الإضافي\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\":  Validate that Session Total Overtime Hours is correct\", function () {\r",
+							"    const expectedSessionTotalOverTimeHours = pm.iterationData.get(\"SessionTotalOverTimeHours\");\r",
+							"    const actualSessionTotalOverTimeHours = jsonData.Data.WorkReportTransactions.List[0].SessionTotalOverTimeHours\r",
+							"    pm.expect(actualSessionTotalOverTimeHours,`Expected session total overTime hours to be ${expectedSessionTotalOverTimeHours}, but got ${actualSessionTotalOverTimeHours}`).to.equal(expectedSessionTotalOverTimeHours);\r",
+							"});\r",
+							"\r",
+							"//المغادرات\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\": Validate that Leave hours is correct\", function () {\r",
+							"    const expectedSessionTotalLeaveHours = pm.iterationData.get(\"SessionTotalLeaveHours\");\r",
+							"    const actualSessionTotalLeaveHours = jsonData.Data.WorkReportTransactions.List[0].SessionTotalLeaveHours\r",
+							"    pm.expect(actualSessionTotalLeaveHours,`Expected leave hours to be ${expectedSessionTotalLeaveHours}, but got ${actualSessionTotalLeaveHours}`).to.equal(expectedSessionTotalLeaveHours);\r",
+							"});\r",
+							"\r",
+							"//إنصراف في اليوم التالي\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\": Validate that OutNextDate flag is correct\", function () {\r",
+							"    const expectedOutNextDay = pm.iterationData.get(\"OutNextDay\");\r",
+							"    const actualOutNextDay = jsonData.Data.WorkReportTransactions.List[0].OutNextDay\r",
+							"    pm.expect(actualOutNextDay,`Expected leave hours to be ${expectedSessionTotalLeaveHours}, but got ${actualSessionTotalLeaveHours}`).to.equal(expectedOutNextDay);\r",
+							"});\r",
+							"\r",
+							"//حالة التحضير\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\": Validate that status is correct\", function () {\r",
+							"    const expectedStatus = pm.iterationData.get(\"Status\");\r",
+							"    const actualStatus = jsonData.Data.WorkReportTransactions.List[0].Status\r",
+							"    pm.expect(actualStatus,`Expected status to be ${expectedStatus}, but got ${actualStatus}`).to.equal(expectedStatus);\r",
+							"});\r",
+							"\r",
+							"//وصف حالة التحضير\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\": Validate that Type Desc is correct\", function () {\r",
+							"    const  expectedTypeDesc = pm.iterationData.get(\"TypeDesc\");\r",
+							"    if (expectedTypeDesc === undefined) {\r",
+							"    expectedTypeDesc = null;\r",
+							"    }\r",
+							"    const actualTypeDesc = jsonData.Data.WorkReportTransactions.List[0].TypeDesc\r",
+							"    pm.expect(actualTypeDesc,`Expected type desc to be ${expectedTypeDesc}, but got ${actualTypeDesc}`).to.equal(expectedTypeDesc);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczMTk5NjI5NywiZXhwIjoxNzMyMDAzNDk3LCJpYXQiOjE3MzE5OTYyOTd9.gRyx5L6qVuPccZch_OkPtXpJ7P13v8g-U3X__J1j3ro"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": ":28564410370429691"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "userid",
+						"value": "01c29bcb-804a-4a6c-96fb-302f915b5bbb"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {\n    \"FromDate\": \"{{ReportFrom}}\",\n    \"ToDate\": \"{{ReportTo}}\",\n    \"UserId\": \"{{userId}}\",\n    \"DisplayType\": 1,\n    \"EmployeeType\": 1\n  },\n  \"UserID\": \"\",\n  \"PageNumber\": 1,\n  \"PageSize\": 10,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/Reports/GetWorkReportByUserIdAndInterval",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"Reports",
+						"GetWorkReportByUserIdAndInterval"
+					]
+				},
+				"description": "Generated from cURL: curl 'https://availo-testingapinew.t2.sa/api/Reports/GetWorkReportByUserIdAndInterval' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'accept-language: en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczMTk5NjI5NywiZXhwIjoxNzMyMDAzNDk3LCJpYXQiOjE3MzE5OTYyOTd9.gRyx5L6qVuPccZch_OkPtXpJ7P13v8g-U3X__J1j3ro' \\\r\n  -H 'clientkey: Availo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'language: 0' \\\r\n  -H 'origin: https://availo-testingnewui.t2.sa' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://availo-testingnewui.t2.sa/' \\\r\n  -H 'requestversion: v 4.9.5' \\\r\n  -H 'requstid: :28564410370429691' \\\r\n  -H 'requsttoken;' \\\r\n  -H 'sec-ch-ua: \"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-site' \\\r\n  -H 'servicekey: aa55a21aae70be27b84cdef2413f519c' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36' \\\r\n  -H 'userid: 01c29bcb-804a-4a6c-96fb-302f915b5bbb' \\\r\n  --data-raw $'{\\n  \"Data\": {\\n    \"FromDate\": \"2024-10-1\",\\n    \"ToDate\": \"2024-10-1\",\\n    \"UserId\": \"42f9641a-defd-4148-b035-9075fcc32023\",\\n    \"DisplayType\": 1,\\n    \"EmployeeType\": 1\\n  },\\n  \"UserID\": \"\",\\n  \"PageNumber\": 1,\\n  \"PageSize\": 10,\\n  \"Language\": 1,\\n  \"TimeZoneOffset\": -120\\n}'"
+			},
+			"response": []
+		}
+	]
+}

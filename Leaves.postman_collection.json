@@ -1,0 +1,1016 @@
+{
+	"info": {
+		"_postman_id": "a4bb6c00-5389-4fb4-bdf1-4d3520964344",
+		"name": "Leaves",
+		"description": "# <u><i>To Be Updated !!</i></u>\n\n## Documentation for used collection and data file\n\n# Collection\n\nThis collection is for single-shift test cases which are included in this [<b>sheet</b>](https://docs.google.com/spreadsheets/d/1IEwWfIIY2fx70rCU50k8Vftt5AlELAm2q2rf7WqQe8c/edit?gid=1203718845#gid=1203718845) and they are:\n\n- TC-00001\n    \n- TC-00002\n    \n- TC-00005\n    \n- TC-00006\n    \n- TC-00007\n    \n- TC-00008\n    \n- TC-00009\n    \n- TC-00010\n    \n- TC-00011\n    \n- TC-00016\n    \n- TC-00017\n    \n- TC-00018\n    \n- TC-00019\n    \n- TC-00020\n    \n- TC-00021\n    \n- TC-00022\n    \n- TC-00023\n    \n- TC-00024\n    \n- TC-00025\n    \n\nColletion include the following requests:  \n<u>Login Web Account Admin &amp; Verification code</u>\n\nBoth requests are responsible for login and authenticate user\n\n<u>Edit checkIn &amp; Edit checkout</u>\n\nBoth requests are responsible for use checkin & checkout\n\n<u>Summary-Report<br></u>Responsible for generating report\n\nAnd all test-scripts are included in this request\n\n# Data file\n\n\"intervalSingleShiftSummaryReport.csv\"\n\nFile include 25 rows each row represent a test case with it's validations.\n\nFile is used to provide data to collection variables.\n\n### <u>File structure</u>\n\n| **column name** | **reflected value in data file** | **reflected value in data base** |\n| --- | --- | --- |\n| skipCheckout | Flag used to skip request in specific test cases | None |\n| TCsId | Test case number which is match the test case number in the used sheet | None |\n| userId | User that will be used when run test case | UserId |\n| SessionCheckInId | Session id generated when user create a checkin action | sessionId |\n| TransactionCheckinID | Transaction id generated when user create a checkin action | transactionId |\n| SessionCheckOutId | Session id generated when user create a checkout action | sessionId |\n| TransactionCheckOutID | Transaction id generated when user create a checkout action | transactionId |\n| CheckIn | Date and time for checkin which is provided by user | createDate |\n| CheckOut | Date and time for checkout which is provided by user | createDate |\n| ReportFrom | Start date for generated reportat | FromDate |\n| ReportTo | End date for generated reportat | ToDate |\n| SessionTotalActualHoursWork | ساعات الدوام الفعلي | SessionTotalActualHoursWork |\n| SessionTotalShortesHours | النقص في الدوام | SessionTotalShortesHours |\n| SessionTotalCheckInExtraHours | حضور مبكر | SessionTotalCheckInExtraHours |\n| SessionTotalCheckInLateHours | حضور متأخر | SessionTotalCheckInLateHours |\n| SessionTotalCheckOutLateHours | إنصراف مبكر | SessionTotalCheckOutLateHours |\n| SessionTotalOverTimeHours | العمل الإضافي | SessionTotalOverTimeHours |\n| SessionTotalLeaveHours | المغادرات | SessionTotalLeaveHours |\n| OutNextDay | Boolean flag used check if this shift extend to next day or not | OutNextDay |\n| Status | حالة التحضير | Status |\n| TypeDesc | Status description if exist (in case there is \"more\" link displayed) | TypeDesc |",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41276037"
+	},
+	"item": [
+		{
+			"name": "Login Web Account Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "requstid",
+						"value": "2:857457095729380",
+						"type": "text"
+					},
+					{
+						"key": "Servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"PageNumber\": 0,\r\n  \"PageSize\": 0,\r\n  \"Language\": 0,\r\n  \"Data\": {\r\n      \"UserName\": \"m.monged@t2.sa\",\r\n      \"Password\":\"wb\\\\42o_`M\",\r\n      \"AccountID\":\"993a9ad3-cacc-4ddc-9978-553f66570714\",\r\n      \"ReCaptchaToken\":\"\"\r\n      }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/User/Login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"User",
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verification code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"pm.environment.set(\"token\", jsonData.Data.AccessToken )"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer null"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": "1:143473796329390"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not-A.Brand\";v=\"99\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {\n    \"UserName\": \"m.monged@t2.sa\",\n    \"Password\": \"wb\\\\42o_`M\",\n    \"AccountID\": \"993a9ad3-cacc-4ddc-9978-553f66570714\",\n    \"PhoneNumber\": \"201273528426\",\n    \"VerificationCode\": \"1234\"\n  },\n  \"UserID\": \"\",\n  \"PageNumber\": 0,\n  \"PageSize\": 0,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -180\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/User/VerifyCode",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"User",
+						"VerifyCode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Leave",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Validate that adding leave returns a status code 200\", function () {\r",
+							"    let actualStatus = pm.response.code;\r",
+							"    let expectedStatus = 200;\r",
+							"\r",
+							"    pm.expect(actualStatus, `Expected status code to be ${expectedStatus}, but got ${actualStatus}`)\r",
+							"      .to.eql(expectedStatus);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczNTA3NjA2MiwiZXhwIjoxNzM1MDk3NjYyLCJpYXQiOjE3MzUwNzYwNjJ9.ZI-vkE0g-fjLzNWM78vQcs7_KA7OYciQDofbVmJYbMw"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": ":42871935706129744"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "userid",
+						"value": "01c29bcb-804a-4a6c-96fb-302f915b5bbb"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {\n    \"AccountID\": \"993a9ad3-cacc-4ddc-9978-553f66570714\",\n    \"UserID\": \"{{userId}}\",\n    \"FromDate\": \"{{FromDate}}\",\n    \"ToDate\": \"{{ToDate}}\",\n    \"FromTime\": \"{{FromTime}}\",\n    \"ToTime\": \"{{ToTime}}\",\n    \"TypeID\": {{LeaveTypeID}}\n  },\n  \"UserID\": \"\",\n  \"PageNumber\": 0,\n  \"PageSize\": 0,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/Leaves/AddLeave",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"Leaves",
+						"AddLeave"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Leaves After Creation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var collectionName = \"Leaves\"\r",
+							"var folderName = \"Testing intervals\"\r",
+							"var TestCaseId = pm.iterationData.get(\"TCsId\")\r",
+							"var TCdate = pm.iterationData.get(\"LeaveDate\")\r",
+							"\r",
+							"var requestID = pm.collectionVariables.set(\"requestID\",jsonData.Data.List[0].ID);\r",
+							"\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\"/\"+TCdate+\":  Validate request status after creation\", function () {\r",
+							"        let actualStatusId = jsonData.Data.List[0].StatusId;\r",
+							"        let expectedStatusId = pm.iterationData.get(\"currentStatusID\");\r",
+							"        pm.expect(actualStatusId, `Expected StatusId to be ${expectedStatusId}, but got ${actualStatusId}`).to.eql(expectedStatusId)\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"// Get the current date\r",
+							"const today = new Date();\r",
+							"const year = today.getFullYear();\r",
+							"const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed\r",
+							"const day = String(today.getDate()).padStart(2, '0');\r",
+							"\r",
+							"// Format as yyyy-mm-dd\r",
+							"const currentDate = `${year}-${month}-${day}`;\r",
+							"\r",
+							"// Set it as a collection variable or global variable\r",
+							"pm.collectionVariables.set(\"currentDate\", currentDate);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczNTEwMjc0MywiZXhwIjoxNzM1MTI0MzQzLCJpYXQiOjE3MzUxMDI3NDN9.J9-yAO97fXlwYFfND9Eekf3ki8m3PfBrGRX97G7cOnA"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": ":28566362685629744"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "userid",
+						"value": "01c29bcb-804a-4a6c-96fb-302f915b5bbb"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {\n    \"AccountID\": \"993a9ad3-cacc-4ddc-9978-553f66570714\",\n    \"DepartmentsIDs\": [],\n    \"CreatedDate\": \"{{currentDate}}\",\n    \"CreatedDateTo\": \"{{currentDate}}\",\n    \"StatusId\": 0,\n    \"TypeID\": 0,\n    \"LeaveNumber\": null,\n    \"EmployeesIDs\": [\n      \"{{userId}}\"\n    ]\n  },\n  \"UserID\": \"\",\n  \"PageNumber\": 1,\n  \"PageSize\": 10,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/Leaves/GetAllLeaves",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"Leaves",
+						"GetAllLeaves"
+					]
+				},
+				"description": "Generated from cURL: curl 'https://availo-testingapinew.t2.sa/api/Leaves/GetAllLeaves' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'accept-language: en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczNTEwMjc0MywiZXhwIjoxNzM1MTI0MzQzLCJpYXQiOjE3MzUxMDI3NDN9.J9-yAO97fXlwYFfND9Eekf3ki8m3PfBrGRX97G7cOnA' \\\r\n  -H 'clientkey: Availo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'language: 0' \\\r\n  -H 'origin: https://availo-testingnewui.t2.sa' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://availo-testingnewui.t2.sa/' \\\r\n  -H 'requestversion: v 4.9.5' \\\r\n  -H 'requstid: :28566362685629744' \\\r\n  -H 'requsttoken;' \\\r\n  -H 'sec-ch-ua: \"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-site' \\\r\n  -H 'servicekey: aa55a21aae70be27b84cdef2413f519c' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36' \\\r\n  -H 'userid: 01c29bcb-804a-4a6c-96fb-302f915b5bbb' \\\r\n  --data-raw $'{\\n  \"Data\": {\\n    \"AccountID\": \"993a9ad3-cacc-4ddc-9978-553f66570714\",\\n    \"DepartmentsIDs\": [\\n      \"54e36044-37ed-421b-82b8-ae98901d1643\"\\n    ],\\n    \"CreatedDate\": \"2024-12-25\",\\n    \"CreatedDateTo\": \"2024-12-25\",\\n    \"StatusId\": 0,\\n    \"TypeID\": 0,\\n    \"LeaveNumber\": null,\\n    \"EmployeesIDs\": [\\n      \"42f9641a-defd-4148-b035-9075fcc32023\"\\n    ]\\n  },\\n  \"UserID\": \"\",\\n  \"PageNumber\": 1,\\n  \"PageSize\": 10,\\n  \"Language\": 1,\\n  \"TimeZoneOffset\": -120\\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Approve-Reject Leave",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczNTEwMjc0MywiZXhwIjoxNzM1MTI0MzQzLCJpYXQiOjE3MzUxMDI3NDN9.J9-yAO97fXlwYFfND9Eekf3ki8m3PfBrGRX97G7cOnA"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": "0:857619773229744"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "userid",
+						"value": "01c29bcb-804a-4a6c-96fb-302f915b5bbb"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {\n    \"LeaveID\": [\n      {{requestID}}\n    ],\n    \"statusID\": {{actionStatusID}}\n  },\n  \"UserID\": \"\",\n  \"PageNumber\": 0,\n  \"PageSize\": 0,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/Leaves/ApproveRejectLeave",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"Leaves",
+						"ApproveRejectLeave"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Leaves After Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var collectionName = \"Leaves\"\r",
+							"var folderName = \"Testing intervals\"\r",
+							"var TestCaseId = pm.iterationData.get(\"TCsId\")\r",
+							"var TCdate = pm.iterationData.get(\"LeaveDate\")\r",
+							"\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\"/\"+TCdate+\":  Validate that request is updated correctly\", function () {\r",
+							"    const expectedStatusID = pm.iterationData.get(\"updatedStatusID\");\r",
+							"    const specificRequest = jsonData.Data.List\r",
+							"    const leaveRequest = specificRequest.find(request => request.ID === pm.collectionVariables.get(\"requestID\"))\r",
+							"    let actualStatusID = leaveRequest.StatusId\r",
+							"    pm.expect(actualStatusID,`Expected status id to be ${expectedStatusID}, but got ${actualStatusID}`).to.eql(expectedStatusID);\r",
+							"});\r",
+							"\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\"/\"+TCdate+\":  Validate that leave type is correct\", function () {\r",
+							"    const expectedTypeDescEn = pm.iterationData.get(\"TypeDescEn\");\r",
+							"    const specificRequest = jsonData.Data.List\r",
+							"    const leaveRequest = specificRequest.find(request => request.ID === pm.collectionVariables.get(\"requestID\"))\r",
+							"    let actualLeaveType = leaveRequest.TypeDescEn\r",
+							"    pm.expect(actualLeaveType,`Expected leave type to be ${expectedTypeDescEn}, but got ${actualLeaveType}`).to.eql(expectedTypeDescEn);\r",
+							"});\r",
+							"\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\"/\"+TCdate+\":  Validate that leave duration is correct\", function () {\r",
+							"    const expectedDurationEn = pm.iterationData.get(\"DurationEn\");\r",
+							"    const specificRequest = jsonData.Data.List\r",
+							"    const leaveRequest = specificRequest.find(request => request.ID === pm.collectionVariables.get(\"requestID\"))\r",
+							"    let actualDuration = leaveRequest.DurationEn\r",
+							"    pm.expect(actualDuration,`Expected leave duration to be ${expectedDurationEn}, but got ${actualDuration}`).to.eql(expectedDurationEn);\r",
+							"});\r",
+							"\r",
+							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\"/\"+TCdate+\":  Validate that leave report include the correct job number\", function () {\r",
+							"    const specificRequest = jsonData.Data.List\r",
+							"    const leaveRequest = specificRequest.find(request => request.ID === pm.collectionVariables.get(\"requestID\"))\r",
+							"    let expectedjobNumber = pm.iterationData.get(\"jobNumber\");\r",
+							"    let actualJobNumber = leaveRequest.JobNumber\r",
+							"    pm.expect(actualJobNumber,`Expected job number to be ${expectedjobNumber}, but got ${actualJobNumber}`).to.eql(expectedjobNumber);   \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"if (pm.iterationData.get('skipDelete') === 'true') {\r",
+							"pm.setNextRequest(null);\r",
+							"    }"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczNTEwMjc0MywiZXhwIjoxNzM1MTI0MzQzLCJpYXQiOjE3MzUxMDI3NDN9.J9-yAO97fXlwYFfND9Eekf3ki8m3PfBrGRX97G7cOnA"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": ":28566362685629744"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "userid",
+						"value": "01c29bcb-804a-4a6c-96fb-302f915b5bbb"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {\n    \"AccountID\": \"993a9ad3-cacc-4ddc-9978-553f66570714\",\n    \"DepartmentsIDs\": [],\n     \"CreatedDate\": \"{{currentDate}}\",\n    \"CreatedDateTo\": \"{{currentDate}}\",\n    \"StatusId\": 0,\n    \"TypeID\": 0,\n    \"LeaveNumber\": null,\n    \"EmployeesIDs\": [\n      \"{{userId}}\"\n    ]\n  },\n  \"UserID\": \"\",\n  \"PageNumber\": 1,\n  \"PageSize\": 10,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/Leaves/GetAllLeaves",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"Leaves",
+						"GetAllLeaves"
+					]
+				},
+				"description": "Generated from cURL: curl 'https://availo-testingapinew.t2.sa/api/Leaves/GetAllLeaves' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'accept-language: en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczNTEwMjc0MywiZXhwIjoxNzM1MTI0MzQzLCJpYXQiOjE3MzUxMDI3NDN9.J9-yAO97fXlwYFfND9Eekf3ki8m3PfBrGRX97G7cOnA' \\\r\n  -H 'clientkey: Availo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'language: 0' \\\r\n  -H 'origin: https://availo-testingnewui.t2.sa' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://availo-testingnewui.t2.sa/' \\\r\n  -H 'requestversion: v 4.9.5' \\\r\n  -H 'requstid: :28566362685629744' \\\r\n  -H 'requsttoken;' \\\r\n  -H 'sec-ch-ua: \"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-site' \\\r\n  -H 'servicekey: aa55a21aae70be27b84cdef2413f519c' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36' \\\r\n  -H 'userid: 01c29bcb-804a-4a6c-96fb-302f915b5bbb' \\\r\n  --data-raw $'{\\n  \"Data\": {\\n    \"AccountID\": \"993a9ad3-cacc-4ddc-9978-553f66570714\",\\n    \"DepartmentsIDs\": [\\n      \"54e36044-37ed-421b-82b8-ae98901d1643\"\\n    ],\\n    \"CreatedDate\": \"2024-12-25\",\\n    \"CreatedDateTo\": \"2024-12-25\",\\n    \"StatusId\": 0,\\n    \"TypeID\": 0,\\n    \"LeaveNumber\": null,\\n    \"EmployeesIDs\": [\\n      \"42f9641a-defd-4148-b035-9075fcc32023\"\\n    ]\\n  },\\n  \"UserID\": \"\",\\n  \"PageNumber\": 1,\\n  \"PageSize\": 10,\\n  \"Language\": 1,\\n  \"TimeZoneOffset\": -120\\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Leave",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6"
+					},
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczNTEwMjc0MywiZXhwIjoxNzM1MTI0MzQzLCJpYXQiOjE3MzUxMDI3NDN9.J9-yAO97fXlwYFfND9Eekf3ki8m3PfBrGRX97G7cOnA"
+					},
+					{
+						"key": "clientkey",
+						"value": "Availo"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "language",
+						"value": "0"
+					},
+					{
+						"key": "origin",
+						"value": "https://availo-testingnewui.t2.sa"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "https://availo-testingnewui.t2.sa/"
+					},
+					{
+						"key": "requestversion",
+						"value": "v 4.9.5"
+					},
+					{
+						"key": "requstid",
+						"value": "4:857750337629744"
+					},
+					{
+						"key": "requsttoken",
+						"value": ""
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-site"
+					},
+					{
+						"key": "servicekey",
+						"value": "aa55a21aae70be27b84cdef2413f519c"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "userid",
+						"value": "01c29bcb-804a-4a6c-96fb-302f915b5bbb"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Data\": {{requestID}},\n  \"UserID\": \"\",\n  \"PageNumber\": 0,\n  \"PageSize\": 0,\n  \"Language\": 1,\n  \"TimeZoneOffset\": -120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/Leaves/DeleteLeave",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"Leaves",
+						"DeleteLeave"
+					]
+				},
+				"description": "Generated from cURL: curl 'https://availo-testingapinew.t2.sa/api/Leaves/DeleteLeave' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'accept-language: en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6' \\\r\n  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMWMyOWJjYi04MDRhLTRhNmMtOTZmYi0zMDJmOTE1YjViYmIiLCJ1bmlxdWVfbmFtZSI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJJZCI6IjAxYzI5YmNiLTgwNGEtNGE2Yy05NmZiLTMwMmY5MTViNWJiYiIsIlVzZXJTdGF0ZXNJRCI6IjEiLCJBY2NvdW50SWQiOiI5OTNhOWFkMy1jYWNjLTRkZGMtOTk3OC01NTNmNjY1NzA3MTQiLCJVc2VybmFtZSI6Im0ubW9uZ2VkQHQyLnNhIiwiVXNlckFjY291bnRJZCI6Ijk5M2E5YWQzLWNhY2MtNGRkYy05OTc4LTU1M2Y2NjU3MDcxNCIsIlBhc3N3b3JkIjoid2JcXDQyb19gTSIsIm5iZiI6MTczNTEwMjc0MywiZXhwIjoxNzM1MTI0MzQzLCJpYXQiOjE3MzUxMDI3NDN9.J9-yAO97fXlwYFfND9Eekf3ki8m3PfBrGRX97G7cOnA' \\\r\n  -H 'clientkey: Availo' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'language: 0' \\\r\n  -H 'origin: https://availo-testingnewui.t2.sa' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://availo-testingnewui.t2.sa/' \\\r\n  -H 'requestversion: v 4.9.5' \\\r\n  -H 'requstid: 4:857750337629744' \\\r\n  -H 'requsttoken;' \\\r\n  -H 'sec-ch-ua: \"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-site' \\\r\n  -H 'servicekey: aa55a21aae70be27b84cdef2413f519c' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36' \\\r\n  -H 'userid: 01c29bcb-804a-4a6c-96fb-302f915b5bbb' \\\r\n  --data-raw $'{\\n  \"Data\": 76688,\\n  \"UserID\": \"\",\\n  \"PageNumber\": 0,\\n  \"PageSize\": 0,\\n  \"Language\": 1,\\n  \"TimeZoneOffset\": -120\\n}'"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "currentDate",
+			"value": ""
+		},
+		{
+			"key": "requestID",
+			"value": ""
+		}
+	]
+}
