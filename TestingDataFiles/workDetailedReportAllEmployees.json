@@ -1,0 +1,86 @@
+[
+  {
+    "TCsId": "TC-00041",
+    "ReportFrom": "2024-11-24",
+    "ReportTo": "2024-11-24",
+    "DepartmentID": [
+      "54e36044-37ed-421b-82b8-ae98901d1643"
+    ],
+    "NumbersOfDays": 2,
+    "JobNumber": 115,
+    "SpecificDate": "2024-11-24T00:00:00",
+    "CheckInTransactionId": 258044,
+    "SessionTotalActualHoursWork": "08:00",
+    "SessionTotalOverTimeHours": "00:00",
+    "SessionTotalCheckInExtraHours": "00:00",
+    "SessionTotalShortesHours": "00:00",
+    "TotalHoursWorkDuringInterval": "12:00",
+    "TotalHoursOverTimeHoursDuringInterval": "00:00",
+    "TotalCheckInExtraHoursDuringInterval": "03:00",
+    "TotalCheckOutLateHoursDuringInterval": "02:59",
+    "Status": "مكتملة"
+  },
+  {
+    "TCsId": "TC-00041",
+    "ReportFrom": "2024-11-24",
+    "ReportTo": "2024-11-24",
+    "DepartmentID": [
+      "54e36044-37ed-421b-82b8-ae98901d1643"
+    ],
+    "NumbersOfDays": 2,
+    "JobNumber": 115,
+    "SpecificDate": "2024-11-24T00:00:00",
+    "CheckInTransactionId": 258046,
+    "SessionTotalActualHoursWork": "04:00",
+    "SessionTotalOverTimeHours": "00:00",
+    "SessionTotalCheckInExtraHours": "03:00",
+    "SessionTotalShortesHours": "00:00",
+    "TotalHoursWorkDuringInterval": "12:00",
+    "TotalHoursOverTimeHoursDuringInterval": "00:00",
+    "TotalCheckInExtraHoursDuringInterval": "03:00",
+    "TotalCheckOutLateHoursDuringInterval": "02:59",
+    "Status": "مكتملة"
+  },
+  {
+    "TCsId": "TC-00041",
+    "ReportFrom": "2024-11-24",
+    "ReportTo": "2024-11-24",
+    "DepartmentID": [
+      "54e36044-37ed-421b-82b8-ae98901d1643"
+    ],
+    "NumbersOfDays": 2,
+    "JobNumber": 1115,
+    "SpecificDate": "2024-11-24T00:00:00",
+    "CheckInTransactionId": 258739,
+    "SessionTotalActualHoursWork": "04:00",
+    "SessionTotalOverTimeHours": "03:00",
+    "SessionTotalCheckInExtraHours": "00:00",
+    "SessionTotalShortesHours": "00:00",
+    "TotalHoursWorkDuringInterval": "12:00",
+    "TotalHoursOverTimeHoursDuringInterval": "03:00",
+    "TotalCheckInExtraHoursDuringInterval": "00:00",
+    "TotalCheckOutLateHoursDuringInterval": "00:00",
+    "Status": "مكتملة"
+  },
+  {
+    "TCsId": "TC-00041",
+    "ReportFrom": "2024-11-24",
+    "ReportTo": "2024-11-24",
+    "DepartmentID": [
+      "54e36044-37ed-421b-82b8-ae98901d1643"
+    ],
+    "NumbersOfDays": 2,
+    "JobNumber": 1115,
+    "SpecificDate": "2024-11-24T00:00:00",
+    "CheckInTransactionId": 258741,
+    "SessionTotalActualHoursWork": "08:00",
+    "SessionTotalOverTimeHours": "00:00",
+    "SessionTotalCheckInExtraHours": "00:00",
+    "SessionTotalShortesHours": "00:00",
+    "TotalHoursWorkDuringInterval": "12:00",
+    "TotalHoursOverTimeHoursDuringInterval": "03:00",
+    "TotalCheckInExtraHoursDuringInterval": "00:00",
+    "TotalCheckOutLateHoursDuringInterval": "00:00",
+    "Status": "مكتملة"
+  }
+]
