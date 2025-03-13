@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a9d0e6a9-40fa-4320-878b-883314b9a103",
+		"_postman_id": "9d552783-84b3-4497-b586-c55a4cd32af8",
 		"name": "Testing-summaryReport-All-Employees",
 		"description": "# <u><i>To Be Updated !!</i></u>\n\n## Documentation for used collection and data file\n\n# Collection\n\nThis collection is for single-shift test cases which are included in this [<b>sheet</b>](https://docs.google.com/spreadsheets/d/1IEwWfIIY2fx70rCU50k8Vftt5AlELAm2q2rf7WqQe8c/edit?gid=1203718845#gid=1203718845) and they are:\n\n- TC-00001\n    \n- TC-00002\n    \n- TC-00005\n    \n- TC-00006\n    \n- TC-00007\n    \n- TC-00008\n    \n- TC-00009\n    \n- TC-00010\n    \n- TC-00011\n    \n- TC-00016\n    \n- TC-00017\n    \n- TC-00018\n    \n- TC-00019\n    \n- TC-00020\n    \n- TC-00021\n    \n- TC-00022\n    \n- TC-00023\n    \n- TC-00024\n    \n- TC-00025\n    \n\nColletion include the following requests:  \n<u>Login Web Account Admin &amp; Verification code</u>\n\nBoth requests are responsible for login and authenticate user\n\n<u>Edit checkIn &amp; Edit checkout</u>\n\nBoth requests are responsible for use checkin & checkout\n\n<u>Summary-Report<br></u>Responsible for generating report\n\nAnd all test-scripts are included in this request\n\n# Data file\n\n\"intervalSingleShiftSummaryReport.csv\"\n\nFile include 25 rows each row represent a test case with it's validations.\n\nFile is used to provide data to collection variables.\n\n### <u>File structure</u>\n\n| **column name** | **reflected value in data file** | **reflected value in data base** |\n| --- | --- | --- |\n| skipCheckout | Flag used to skip request in specific test cases | None |\n| TCsId | Test case number which is match the test case number in the used sheet | None |\n| userId | User that will be used when run test case | UserId |\n| SessionCheckInId | Session id generated when user create a checkin action | sessionId |\n| TransactionCheckinID | Transaction id generated when user create a checkin action | transactionId |\n| SessionCheckOutId | Session id generated when user create a checkout action | sessionId |\n| TransactionCheckOutID | Transaction id generated when user create a checkout action | transactionId |\n| CheckIn | Date and time for checkin which is provided by user | createDate |\n| CheckOut | Date and time for checkout which is provided by user | createDate |\n| ReportFrom | Start date for generated reportat | FromDate |\n| ReportTo | End date for generated reportat | ToDate |\n| SessionTotalActualHoursWork | ساعات الدوام الفعلي | SessionTotalActualHoursWork |\n| SessionTotalShortesHours | النقص في الدوام | SessionTotalShortesHours |\n| SessionTotalCheckInExtraHours | حضور مبكر | SessionTotalCheckInExtraHours |\n| SessionTotalCheckInLateHours | حضور متأخر | SessionTotalCheckInLateHours |\n| SessionTotalCheckOutLateHours | إنصراف مبكر | SessionTotalCheckOutLateHours |\n| SessionTotalOverTimeHours | العمل الإضافي | SessionTotalOverTimeHours |\n| SessionTotalLeaveHours | المغادرات | SessionTotalLeaveHours |\n| OutNextDay | Boolean flag used check if this shift extend to next day or not | OutNextDay |\n| Status | حالة التحضير | Status |\n| TypeDesc | Status description if exist (in case there is \"more\" link displayed) | TypeDesc |",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -201,7 +201,7 @@
 					"script": {
 						"exec": [
 							"var jsonData = pm.response.json();\r",
-							"var totalCount = pm.collectionVariables.set(\"totalCount\",jsonData.Data.TotalCount);\r",
+							"pm.collectionVariables.set(\"totalCount\",jsonData.Data.TotalCount);\r",
 							""
 						],
 						"type": "text/javascript",
@@ -346,8 +346,10 @@
 							"\r",
 							"// Extract the list of employees and the overall TotalCount\r",
 							"const employees = jsonData.Data.List;\r",
+							"\r",
 							"// Find the employee with specific ID\r",
 							"const specificEmployee = employees.find(emp => emp.JobNumber === pm.iterationData.get(\"JobNumber\"));\r",
+							"\r",
 							"// Extract the list of transactions for this employee\r",
 							"const workTransactions = specificEmployee.WorkReportTransactions.List;\r",
 							"// Define the specific date\r",
@@ -448,6 +450,7 @@
 							"        const actualTotalCheckInLateHoursDuringInterval = specificEmployee.TotalCheckInLateHoursDuringInterval\r",
 							"        pm.expect(actualTotalCheckInLateHoursDuringInterval,`Expected total checkin late hours during interval for employee to be ${expectedTotalCheckInLateHoursDuringInterval}, but got ${actualTotalCheckInLateHoursDuringInterval}`).to.eql(expectedTotalCheckInLateHoursDuringInterval);\r",
 							"    });\r",
+							"\r",
 							"\r",
 							"pm.test(collectionName + \"/\" + folderName +\"/\"+TestCaseId+\"/\"+TCdate+\":  Validate total retrived user is correct\", function () {\r",
 							"    const expectedTotalEmpRetrived = pm.collectionVariables.get(\"totalCount\")\r",
@@ -579,6 +582,28 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
