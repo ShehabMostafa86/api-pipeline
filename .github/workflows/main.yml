@@ -22,7 +22,7 @@ jobs:
       # Run Collection 1
       - name: Run Testing intervals singleShift summary report
         run: |
-          newman run Collections/Testing-summaryReport-All-Employees.postman_collection.json \
-          -e Environments/testing.postman_environment.json \
-          -d TestingDataFiles/workSummaryReportAllEmployees.json \
-          -r cli,json
+          newman run ./Collections/Testing-summaryReport-All-Employees.postman_collection.json \
+          -e ./Environments/testing.postman_environment.json \
+          -d ./TestingDataFiles/workSummaryReportAllEmployees.json \
+          -r cli
